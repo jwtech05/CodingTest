@@ -4,62 +4,57 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class 유니온파인드_백준_1976 {
 
-    static ArrayList<ArrayList<Integer>> road;
-    static int[] unionFind;
+    public static int[] parent;
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
+        int M = sc.nextInt();
+        int[][] dosi = new int[N+1][N+1];
+        for (int i=1; i<=N; i++){
+            for (int j=1; j <= N; j++){
+                dosi[i][j] = sc.nextInt();
+            }
+        }
+        int[] route = new int[M+1];
+        for (int i=1; i<=M; i++) {
+            route[i] = sc.nextInt();
+        }
+        parent = new int[N+1];
+        for(int i=1; i<=N; i++){
+            parent[i] = i;
+        }
+        for(int i=1; i<=N; i++){
+            for(int j=1; j<=N; j++){
+                if (dosi[i][j] == 1) union(i,j);
+            }
+        }
+        int index = find(route[1]);
+        for(int i=2; i< route.length; i++) {
+            if(index != find(route[i])) {
+                System.out.println("NO");
+                return;
+            }
+        }
+        System.out.println("Yes");
+    }
+
     public static void union(int a, int b){
-        int x = find(a);
-        int y = find(b);
-        unionFind[y] = unionFind[x];
+        a = find(a);
+        b = find(b);
+        if (a != b) {
+            parent[b] = a;
+        }
     }
 
-    public static int find(int num){
-        if(unionFind[num] == num){
-            return num;
-        }
-        return unionFind[num] = find(unionFind[num]);
-    }
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int city = Integer.parseInt(br.readLine())+1;
-        int planedCity = Integer.parseInt(br.readLine());
-        unionFind = new int[city];
-        for(int i=0 ; i< city; i++){
-            unionFind[i] = i;
-        }
-        road = new ArrayList<>();
-        StringTokenizer st;
-        for(int i=0; i < city; i++){
-            road.add(new ArrayList<Integer>());
-        }
-        for(int i=1; i < city; i++){
-            st = new StringTokenizer(br.readLine());
-            for(int j=1; j < city; j++){
-                if(Integer.parseInt(st.nextToken()) == 1) {
-                    road.get(i).add(j);
-                }
-            }
-        }
-        for(int i=1; i < road.size(); i++){
-            for(int j=0; j < road.get(i).size(); j++){
-                union(i,road.get(i).get(j));
-            }
-        }
-        int[] planed = new int[planedCity];
-        st = new StringTokenizer(br.readLine());
-        for(int i=0; i< planedCity; i++){
-            planed[i] = Integer.parseInt(st.nextToken());
-        }
-        String answer = "YES";
-        for(int i=0; i< planedCity-1; i++){
-            if(unionFind[planed[i]] != unionFind[planed[i+1]]){
-                answer = "NO";
-            }
-        }
-        System.out.println(answer);
+    public static int find(int a){
+        if(a == parent[a])
+            return a;
+        else
+            return parent[a] = find(parent[a]);
     }
 }
