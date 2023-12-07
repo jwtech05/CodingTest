@@ -6,7 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
-public class UnionFInd_1976 {
+public class UnionFind_1976 {
     static ArrayList<ArrayList<Integer>> road;
     static int[] unionFind;
     public static void union(int a, int b){
