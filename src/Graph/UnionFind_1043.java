@@ -12,7 +12,11 @@ public class UnionFind_1043 {
         a = find(a);
         b = find(b);
         if(a != b){
-            unionFind[b] = a;
+            if(a < b) {
+                unionFind[b] = a;
+            }else{
+                unionFind[a] = b;
+            }
         }
     }
     public static int find(int num){
