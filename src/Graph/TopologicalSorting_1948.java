@@ -16,61 +16,61 @@ class Node {
 public class TopologicalSorting_1948 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
+        int N = Integer.parseInt(br.readLine());
         int M = Integer.parseInt(br.readLine());
         ArrayList<ArrayList<Node>> arr = new ArrayList<>();
         ArrayList<ArrayList<Node>> reverseArr = new ArrayList<>();
-        for(int i = 0; i<=N; i++){
+        for(int i = 0 ; i<=N; i++){
             arr.add(new ArrayList<>());
             reverseArr.add(new ArrayList<>());
         }
-        int[] cityArr = new int[N+1];
-        int[] costArr = new int[N+1];
-        for(int i=0; i<M; i++){
+        int[] roadTemp = new int[N+1];
+        int[] roadCost = new int[N+1];
+        StringTokenizer st;
+        for(int i=0; i<M; i++) {
             st = new StringTokenizer(br.readLine());
-            int start = Integer.parseInt(st.nextToken());
-            int end = Integer.parseInt(st.nextToken());
-            int cost = Integer.parseInt(st.nextToken());
-            arr.get(start).add(new Node(end, cost));
-            reverseArr.get(end).add(new Node(start, cost));
-            cityArr[end]++;
+            int s = Integer.parseInt(st.nextToken());
+            int e = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            arr.get(s).add(new Node(e, c));
+            reverseArr.get(e).add(new Node(s, c));
+            roadTemp[e]++;
         }
         st = new StringTokenizer(br.readLine());
-        int startCity = Integer.parseInt(st.nextToken());
-        int endCity = Integer.parseInt(st.nextToken());
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
 
         Queue<Integer> queue = new LinkedList<>();
-        queue.offer(startCity);
+        queue.offer(start);
         while(!queue.isEmpty()){
             int now = queue.poll();
-            for(Node x : arr.get(now)){
-                cityArr[x.targetNode]--;
-                costArr[x.targetNode] = Math.max(costArr[x.targetNode], costArr[now] + x.value);
-                if(cityArr[x.targetNode] == 0){
-                    queue.offer(x.targetNode);
+            for(Node next : arr.get(now)){
+                roadTemp[next.targetNode]--;
+                roadCost[next.targetNode] = Math.max(roadCost[next.targetNode], roadCost[now] + next.value);
+                if(roadTemp[next.targetNode] == 0){
+                    queue.offer(next.targetNode);
                 }
             }
         }
-
-        int resultCount = 0;
-        boolean visited[] = new boolean[N+1];
+        int resultCnt = 0;
+        boolean[] visited = new boolean[N+1];
         queue = new LinkedList<>();
-        queue.offer(endCity);
-        visited[endCity] = true;
+        queue.offer(end);
+        visited[end] = true;
         while(!queue.isEmpty()){
             int now = queue.poll();
-            for(Node x : reverseArr.get(now)){
-                if(costArr[x.targetNode] + x.value == costArr[now]){
-                    resultCount++;
-                    if(!visited[x.targetNode]){
-                        visited[x.targetNode] = true;
-                        queue.offer(x.targetNode);
+            for(Node next : reverseArr.get(now)){
+                if(roadCost[now] == next.value + roadCost[next.targetNode]){
+                    resultCnt++;
+                    if(!visited[next.targetNode]) {
+                        visited[next.targetNode] = true;
+                        queue.offer(next.targetNode);
                     }
                 }
+
             }
         }
-        System.out.println(costArr[endCity]);
-        System.out.println(resultCount);
+        System.out.println(roadCost[N]);
+        System.out.println(resultCnt);
     }
 }
