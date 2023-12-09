@@ -40,18 +40,18 @@ public class Dijkstra_1753 {
         Arrays.fill(shortWay, Integer.MAX_VALUE);
         shortWay[start] = 0;
         boolean[] visited = new boolean[V+1];
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(start);
+        PriorityQueue<dNode> queue = new PriorityQueue<>();
+        queue.offer(new dNode(start, 0));
         while(!queue.isEmpty()){
-            int now = queue.poll();
-            if(visited[now]){
+            dNode now = queue.poll();
+            if(visited[now.head]){
                 continue;
             }
-            visited[now] = true;
-            for(dNode x : arr.get(now)){
-                if(shortWay[x.head] > shortWay[now] + x.cost){
-                    shortWay[x.head] = shortWay[now] + x.cost;
-                    queue.offer(x.head);
+            visited[now.head] = true;
+            for(dNode x : arr.get(now.head)){
+                if(shortWay[x.head] > shortWay[now.head] + x.cost){
+                    shortWay[x.head] = shortWay[now.head] + x.cost;
+                    queue.offer(new dNode(x.head, shortWay[x.head]));
                 }
             }
         }
