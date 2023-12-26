@@ -1,27 +1,47 @@
 package DynamicProgramming;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class DP_14501 {
-    public static void main(String[] args){
-        Scanner sc = new Scanner(System.in);
-        int N = sc.nextInt();
-        int[] D = new int[N+2];
-        int[] T = new int[N+1];
-        int[] P = new int[N+1];
-        for(int i= 1; i <=N; i++){
-            T[i] = sc.nextInt();
-            P[i] = sc.nextInt();
+    static int N;
+    static int[] dp;
+    static int[] time;
+    static int[] pay;
+    static int result;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        time = new int[N+1];
+        pay = new int[N+1];
+        dp = new int[N+1];
+        for(int i=1; i<=N; i++){
+            st = new StringTokenizer(br.readLine());
+            time[i] = Integer.parseInt(st.nextToken());
+            pay[i] = Integer.parseInt(st.nextToken());
         }
-        for(int i= N; i>0; i--){
-            if(i + T[i] > N+1){
-                D[i] = D[i+1];
-            }
-            else {
-                D[i] = Math.max(D[i+1], P[i] + D[i + T[i]]);
-            }
-            System.out.println(D[1]);
+        result = 0;
+        DFS(1, 0);
+
+        System.out.println(result);
+
+    }
+    public static void DFS(int d, int p){
+        if(d > N){
+            result = Math.max(p, result);
+            return;
         }
+        if(time[d] + d <= N + 1) {
+            DFS(d+time[d], p + pay[d]);
+        }else{
+            DFS(d+time[d], p);
+        }
+
+        DFS(d+1,p);
     }
 
 }
