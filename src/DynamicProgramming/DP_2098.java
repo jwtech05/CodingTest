@@ -15,7 +15,7 @@ public class DP_2098 {
         StringTokenizer st = null;
         N = Integer.parseInt(br.readLine().trim());
         W = new int[16][16];
-        d = new int[16][1 << 16];
+        d = new int[16][1 << 4];
         for(int i=0; i<N; i++){
             st = new StringTokenizer(br.readLine().trim());
             for(int j=0; j< N; j++) {
