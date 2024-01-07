@@ -1,53 +1,52 @@
 package DynamicProgramming;
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class DP_12738_2 {
-    private static final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static final BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) throws IOException {
-        int n = Integer.parseInt(br.readLine());
+    public static void main(String[] args) throws Exception {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+        long N = Integer.parseInt(br.readLine());
+        long[] inputArray = new long[(int) N];
+        long[] LIS = new long[(int) N];
+
         StringTokenizer st = new StringTokenizer(br.readLine());
-        // 증가수열을 저장할 리스트
-        List<Integer> list = new ArrayList<>();
-        // 입력된 값을 저장할 배열
-        int arr[] = new int[n + 1];
+        for (long i = 0; i < N; i++) {
+            inputArray[(int) i] = Integer.parseInt(st.nextToken());
+        }
 
-        for(int i = 1 ; i <= n; i++) arr[i] = Integer.parseInt(st.nextToken());
+        LIS[0] = inputArray[0];
+        long j = 0;
 
-        list.add(Integer.MIN_VALUE);
-
-        for(int i = 1 ; i <= n; i++){
-            int num = arr[i];
-            int left = 1;
-            int right = list.size() - 1;
-
-            // 확인하는 숫자가 증가수열의 마지막 수보다 큰 경우
-            // 수열에 추가해준다.
-            if(num > list.get(list.size() - 1)) list.add(num);
-                // 확인하는 숫자가 증가수열의 마지막 수보다 작은 경우
-            else{
-                // 숫자의 적당한 위치를 찾아
-                // 증가수열의 값을 변경해준다.
-                while(left < right){
-                    int mid = (left + right) >> 1;
-
-                    if(list.get(mid) >= num) right = mid;
-                    else left = mid + 1;
-                }
-                list.set(right, num);
+        for (long i = 1; i < N; i++) {
+            if (LIS[(int) j] < inputArray[(int) i]) {
+                LIS[(int) ++j] = inputArray[(int) i];
+            } else {
+                long ans = binarySearch(LIS, 0, j, inputArray[(int) i]);
+                LIS[(int) ans] = Math.min(LIS[(int) ans], inputArray[(int) i]);
             }
         }
-        // 최장 길이 출력
-        sb.append(list.size() - 1 + "\n");
+        System.out.println(j + 1);
 
-        bw.write(sb.toString());
-        bw.close();
-        br.close();
+        for (int i=0; i < LIS.length; i++){
+            if(LIS[i] != 0) {
+                System.out.print(LIS[i] + " ");
+            }
+        }
+    }
+
+    static long binarySearch(long[] LIS, int startIndex, long endIndex, long key) {
+        while (startIndex <= endIndex) {
+            int mid = (int) ((startIndex + endIndex) / 2);
+            if (LIS[mid] < key) {
+                startIndex = mid + 1;
+            } else {
+                endIndex = mid - 1;
+            }
+        }
+        return startIndex;
     }
 }
