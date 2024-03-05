@@ -24,6 +24,7 @@ public class Hash_9375 {
             int num = Integer.parseInt(br.readLine());
             HashMap<String, Integer> HM = new HashMap<>();
             for(int j = 0; j< num; j++){
+                HM.hashCode();
                 String [] arr = new String[2];
                 st = new StringTokenizer(br.readLine());
                 arr[0] = st.nextToken();
