@@ -36,6 +36,7 @@ public class Hash_22252 {
                     int num = Integer.parseInt(st.nextToken());
                     HM.get(gorilla).add(num);
                 }
+                // PriorityQueue<Integer> pq = new PriorityQueue<>
             }else if(M == 2){
                 if(!HM.containsKey(gorilla)) continue;
                 for(int j=0; j<infoNum; j++){

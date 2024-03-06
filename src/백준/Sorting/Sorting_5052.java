@@ -8,11 +8,11 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 /*
-* 6차 시도 : 실패
-* 소요 시간 : 3시간 22분
-* 실패 원인 :
-*
-* */
+ * 6차 시도 : 실패
+ * 소요 시간 : 3시간 22분
+ * 실패 원인 :
+ *
+ * */
 public class Sorting_5052 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -39,10 +39,11 @@ public class Sorting_5052 {
                     if(arr[k][j] != -1) checkArr[j][arr[k][j]]++;
                 }
             }
+            boolean flag;
             for(int j=0; j<ec; j++){
-                boolean flag = false;
+                flag = false;
                 for(int k=0; k<arr[j].length; k++){
-                    if(arr[j][k] == -1) continue;
+                    if(arr[j][k] == -1) break;
                     //하나라도 1이 있으면 일관성이 있는 것
                     if(checkArr[k][arr[j][k]] == 1) flag = true;
                 }
@@ -56,4 +57,9 @@ public class Sorting_5052 {
         }
         System.out.println(sb.toString());
     }
-}
+
+    // 919
+    // 221
+    // 9119
+    // 2221
+ }
