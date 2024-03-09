@@ -22,7 +22,9 @@ public class Sorting_5052 {
             int num = Integer.parseInt(br.readLine());
             String[] pNumArr = new String[num];
             for(int j=0; j<num; j++){
-                pNumArr[j] = br.readLine();
+                String pNum = br.readLine();
+                pNumArr[j] = pNum;
+                HM.put(pNum, false);
             }
             for(String pNum : pNumArr){
                 if(answer.equals("YES")) {
@@ -30,11 +32,14 @@ public class Sorting_5052 {
                     for (int j = 1; j <= pNum.length(); j++) {
                         part = pNum.substring(0, j);
                         if (HM.containsKey(part)) {
-                            answer = "NO";
-                            break;
+                            if(HM.get(part)){
+                                answer = "NO";
+                                break;
+                            }else{
+                                HM.put(part,true);
+                            }
                         }
                     }
-                    HM.put(part, true);
                 }else{
                     break;
                 }
