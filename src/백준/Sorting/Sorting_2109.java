@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.StringTokenizer;
 
@@ -18,7 +19,7 @@ class pNode implements Comparable<pNode>{
     @Override
     public int compareTo(pNode o) {
         if(o.day < this.day) return 1;
-        return -1;
+        return this.day - o.day;
     }
 }
 public class Sorting_2109 {
@@ -38,7 +39,7 @@ public class Sorting_2109 {
         int answer = 0;
         for(int i=0; i<N; i++){
             int cPay = arr.get(i).pay;
-            for(int j=0; j<=arr.get(i).day; j++){
+            for(int j=1; j<=arr.get(i).day; j++){
                 if(payArr[j] < cPay){
                     int temp = cPay;
                     cPay = payArr[j];
