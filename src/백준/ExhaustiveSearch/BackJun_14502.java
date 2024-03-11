@@ -3,7 +3,6 @@ package 백준.ExhaustiveSearch;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
@@ -23,7 +22,7 @@ class vNode{
     }
 }
 
-public class backJun_14502 {
+public class BackJun_14502 {
     static int N,M;
     static int[] dx = {-1,0,1,0};
     static int[] dy = {0,-1,0,1};
