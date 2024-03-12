@@ -60,10 +60,10 @@ public class BackJun_14503 {
                 check[x][y] = true;
                 System.out.print("("+x+","+y+","+direct+")");
             }
-            if(x- 1 < 0 && y-1 <0 && x +1 >= N && y+1 >= M) {
+/*            if(x- 1 < 0 && y-1 <0 && x +1 >= N && y+1 >= M) {
                 flag = true;
                 continue;
-            }
+            }*/
             //현재 칸의 주변 4칸 중 청소되지 않은 빈 칸이 없는 경우
             if (check[x + dx[0]][y + dy[0]] && check[x + dx[1]][y + dy[1]] && check[x + dx[2]][y + dy[2]] && check[x + dx[3]][y + dy[3]]) {
                 //바라보는 방향의 뒤쪽 칸이 벽이라 후진할 수 없다면 작동을 멈춘다.
