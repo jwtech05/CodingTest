@@ -25,11 +25,13 @@ public class Sorting_5052 {
                 String pNum = br.readLine();
                 pNumArr[j] = pNum;
                 HM.put(pNum, false);
+                //911,false / 97625999
             }
             for(String pNum : pNumArr){
                 if(answer.equals("YES")) {
                     String part = "";
                     for (int j = 1; j <= pNum.length(); j++) {
+                        // 911, true
                         part = pNum.substring(0, j);
                         if (HM.containsKey(part)) {
                             if(HM.get(part)){

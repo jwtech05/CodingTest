@@ -7,9 +7,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 /*
- * 시도 : 2회
- * 채점 결과 : 실패
- * 소요 시간 : 1시간 40분
+ * 시도 : 3회
+ * 채점 결과 : 성공
+ * 소요 시간 : 1시간 57분
+ * 실패 요소 : 동서남북의 움직임과 배열에서의 움직임이 같을 것이라고 생각하고 극간을 눈치채지 못했다.
  * */
 class cNode{
     int nn;
@@ -23,8 +24,8 @@ class cNode{
 }
 
 public class BackJun_14503 {
-    static int[] dx = {0,1,0,-1};
-    static int[] dy = {1,0,-1,0};
+    static int[] dx = {-1,0,1,0};
+    static int[] dy = {0,1,0,-1};
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -50,7 +51,7 @@ public class BackJun_14503 {
             }
         }
         boolean flag = false;
-        while(!queue.isEmpty() && !flag) {
+        loop : while(!queue.isEmpty()) {
             cNode start = queue.poll();
             int x = start.nn;
             int y = start.mm;
@@ -58,9 +59,9 @@ public class BackJun_14503 {
             //현재 칸이 아직 청소되지 않은 경우, 현재 칸을 청소한다.
             if (!check[x][y]) {
                 check[x][y] = true;
-                System.out.print("("+x+","+y+","+direct+")");
+                //System.out.print("("+x+","+y+","+direct+")");
             }
-/*            if(x- 1 < 0 && y-1 <0 && x +1 >= N && y+1 >= M) {
+            /*  if(x- 1 < 0 && y-1 <0 && x +1 >= N && y+1 >= M) {
                 flag = true;
                 continue;
             }*/
@@ -68,7 +69,7 @@ public class BackJun_14503 {
             if (check[x + dx[0]][y + dy[0]] && check[x + dx[1]][y + dy[1]] && check[x + dx[2]][y + dy[2]] && check[x + dx[3]][y + dy[3]]) {
                 //바라보는 방향의 뒤쪽 칸이 벽이라 후진할 수 없다면 작동을 멈춘다.
                 if (arr[x + (dx[direct] * -1)][y + (dy[direct]* -1)] == 1) {
-                    flag = true;
+                    break loop;
                 } else { //바라보는 방향을 유지한 채로 한 칸 후진할 수 있다면 한 칸 후진하고 1번으로 돌아간다.
                     queue.offer(new cNode(x + (dx[direct] * -1), y + (dy[direct]* -1), direct));
                 }
@@ -76,6 +77,7 @@ public class BackJun_14503 {
                 //반시계 방향으로 90도 회전한다.
                 if(direct == 0) direct = 4;
                 direct = (direct - 1) % 4;
+                //System.out.print("("+direct+")");
                 //바라보는 방향을 기준으로 앞쪽 칸이 청소되지 않은 빈칸인 경우 한 칸 전진한다.
                 if (x+dx[direct] < N && y+dy[direct] < M && !check[x + dx[direct]][y + dy[direct]]) {
                     queue.offer(new cNode(x + dx[direct], y + dy[direct], direct));
