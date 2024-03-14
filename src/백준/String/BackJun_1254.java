@@ -5,9 +5,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /*
-* 시도 :
-* 시간 : 41분
-*
+* 시도 : 2회
+* 시간 : 59분
+* 성공 여부 : 보류
 * */
 public class BackJun_1254 {
     public static void main(String[] args) throws IOException {
