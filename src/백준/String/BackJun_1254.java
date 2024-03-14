@@ -3,8 +3,12 @@ package 백준.String;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
+/*
+* 시도 :
+* 시간 : 41분
+*
+* */
 public class BackJun_1254 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -14,5 +18,19 @@ public class BackJun_1254 {
             sb.append(origin.charAt(i));
         }
         String reverse = sb.toString();
+        int same = 0;
+        for(int i=0; i<origin.length(); i++){
+            for(int j=i+1; j<=origin.length(); j++){
+                String realOg = origin.substring(i,j);
+                for(int k=1; k<=reverse.length(); k++){
+                    String rv = reverse.substring(0,k);
+                    if(realOg.equals(rv)){
+                        same = Math.max(same, rv.length());
+                    }
+                }
+            }
+        }
+        int answer = (origin.length() * 2) - same;
+        System.out.print(answer);
     }
 }
