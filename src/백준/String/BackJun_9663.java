@@ -31,7 +31,7 @@ public class BackJun_9663 {
         }
         for(int i=x; i<N; i++){
             for(int j=0; j<N; j++){
-                if(arr[i][j] == 0){
+                if(arr[i][j] == 0){ //여기가 종료가 되야 GC 적용
                     int[][] beforeArr = beforeChecker(arr);
                     if(checker(i,j)) {
                         arr[i][j] = 2;

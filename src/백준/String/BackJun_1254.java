@@ -19,7 +19,7 @@ public class BackJun_1254 {
         }
         String reverse = sb.toString();
         int same = 0;
-        for(int i=0; i<origin.length(); i++){
+/*        for(int i=0; i<origin.length(); i++){
             for(int j=i+1; j<=origin.length(); j++){
                 String realOg = origin.substring(i,j);
                 for(int k=1; k<=reverse.length(); k++){
@@ -29,7 +29,15 @@ public class BackJun_1254 {
                     }
                 }
             }
+        }*/
+        for(int k=1; k<=reverse.length(); k++){
+            String realOg = origin.substring(origin.length()-k,origin.length());
+            String rv = reverse.substring(0,k);
+            if(realOg.equals(rv)){
+                same = Math.max(same, rv.length());
+            }
         }
+
         int answer = (origin.length() * 2) - same;
         System.out.print(answer);
     }
