@@ -29,7 +29,7 @@ public class Hash_22252 {
             String gorilla = st.nextToken();
             int infoNum = Integer.parseInt(st.nextToken());
             if(M == 1){
-                if(!HM.containsKey(gorilla)) HM.put(gorilla, new PriorityQueue<Integer>(Collections.reverseOrder()));
+                if(!HM.containsKey(gorilla)) HM.put(gorilla, new PriorityQueue<Integer>(((o1, o2) -> o1-o2)));
                 //reversOrder 몰라서 검색했음
                 //HM.put(gorilla, HM.getOrDefault(gorilla, new PriorityQueue<Integer>(Collections.reverseOrder())));
                 for(int j=0; j<infoNum; j++) {
