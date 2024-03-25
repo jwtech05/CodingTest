@@ -3,11 +3,13 @@ package 백준.String;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.StringTokenizer;
 
 /*
- * 시도 : 1회
- * 시간 : 42분
+ * 시도 : 6회
+ * 시간 : 2시간
  * 성공 여부 : 보류
  * */
 public class BackJun_16120 {
@@ -20,30 +22,59 @@ public class BackJun_16120 {
         standard = br.readLine();
         sb = new StringBuilder();
         len = standard.length();
-        flag = false;
-        DFS("P", 4);
+        flag = true;
+        sb.append(standard);
+        ArrayList<Character> arr = new ArrayList<>();
+        for(int i = 0; i<standard.length(); i++){
+            arr.add(standard.charAt(i));
+        }
+        char[] alpha = standard.toCharArray();
 
+        for(int i=0; i<standard.length(); i++){
+            if(alpha[i] =='A') {
+                if(standard.charAt(i-2) == 'P' && standard.charAt(i-1) == 'P' && standard.charAt(i+1) == 'P') sb.replace(i-2, i+1, "P");
+                System.out.println(sb.toString());
+            }
+        }
+        String newStandard = sb.toString();
         if(flag) System.out.println("PPAP");
         else System.out.println("NP");
     }
 
-    public static void DFS(String str, int N){
-        if(N >= len){
-            if(str.equals(standard)){
-                flag = true;
-            }
+    public static void DFS(String str) {
+        if(str.equals("P")){
+            flag = true;
             return;
         }
-        for(int i=0; i<str.length(); i++){
-            if(str.charAt(i) == 'P') {
-                String front = str.substring(0, i);
-                String back = str.substring(i + 1);
-                sb.append(front).append("PPAP").append(back);
-                String nStr = sb.toString();
-                sb.setLength(0);
-                DFS(nStr, nStr.length());
-            }
+        if(!str.contains("A") || str.length() < 4){
+            return;
         }
-
+        int aLoc = str.indexOf("A");
+        if(aLoc < 2){
+            return;
+        }
+        String front = str.substring(aLoc - 2, aLoc);
+        String back = str.substring(aLoc + 1, aLoc + 2);
+        if(front.equals("PP") && back.equals("P")){
+            String fFront = str.substring(0, aLoc-2);
+            String bBack = str.substring(aLoc+2);
+            sb.append(fFront).append("P").append(bBack);
+            String nStandard = sb.toString();
+            sb.setLength(0);
+            DFS(nStandard);
+        }
     }
 }
+/*        Iterator<Character> itr = arr.iterator();
+        while(itr.hasNext()){
+            char a = itr.next();
+            char b = itr.next();
+            char c = itr.next();
+            char d = itr.next();
+            if(a == 'P' && b=='P' && c=='A' && d=='P') {
+                itr.remove();
+                itr.remove();
+                itr.remove();
+            }
+            System.out.println(a+b+c+d);
+        }*/

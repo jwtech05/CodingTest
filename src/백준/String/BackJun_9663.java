@@ -5,60 +5,42 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 /*
-* 시도 : 2회
-* 시간 : 1시간 50분
-* 성공 여부 : 실패
+* 시도 : 6회
+* 시간 : 2시간 20분
+* 성공 여부 : 성공
 * 꼬였을때 어떻게 할지 고민하기 / 완탐을 하되 조건을 어떻게 추가하는지에 관해 / 메모리 초과
 * */
 public class BackJun_9663 {
     public static int[][] arr;
     public static int N, answer;
+    public static boolean[] flag;
     public static int[] dx = {1,1,-1,-1,0,1,0,-1};
     public static int[] dy = {-1,1,1,-1,1,0,-1,0};
+/*    public static int[] dx = {1,1,-1,-1};
+    public static int[] dy = {-1,1,1,-1};*/
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        long bT = System.currentTimeMillis();
         N = Integer.parseInt(br.readLine());
         arr = new int[N][N];
+        flag = new boolean[N];
         answer = 0;
-        DFS(0,0,0);
+        DFS(0);
         System.out.println(answer);
+        long sT = System.currentTimeMillis();
+        System.out.println((sT - bT)/1000);
     }
 
-    public static void DFS(int x, int y, int cnt){
-        if(cnt >= N){
+    public static void DFS(int x){
+        if(x >= N){
             answer++;
             return;
         }
-        for(int i=x; i<N; i++){
-            for(int j=0; j<N; j++){
-                if(arr[i][j] == 0){ //여기가 종료가 되야 GC 적용
-                    int[][] beforeArr = beforeChecker(arr);
-                    if(checker(i,j)) {
-                        arr[i][j] = 2;
-                        DFS(i+1,j+1,cnt + 1);
-                        afterChecker(beforeArr);
-                    }else{
-                        afterChecker(beforeArr);
-                    }
-                }
-            }
-        }
-    }
-
-    public static int[][] beforeChecker(int[][] arr){
-        int[][] backArr = new int[N][N];
         for(int i=0; i<N; i++){
-            for(int j=0; j<N; j++){
-                backArr[i][j] = arr[i][j];
-            }
-        }
-        return backArr;
-    }
-
-    public static void afterChecker(int[][] beforeChecker){
-        for(int i=0; i<N; i++){
-            for(int j=0; j<N; j++){
-                arr[i][j] = beforeChecker[i][j];
+            if(checker(x,i)){
+                arr[x][i] = 2;
+                DFS(x+1);
+                arr[x][i] = 0;
             }
         }
     }
@@ -71,7 +53,6 @@ public class BackJun_9663 {
                 if(arr[x][y] == 2){
                     return false;
                 }
-                arr[x][y] = 1;
                 x += dx[i];
                 y += dy[i];
             }
@@ -79,3 +60,10 @@ public class BackJun_9663 {
         return true;
     }
 }
+/*        for(int i=0; i<N; i++){
+            for(int j=0; j<N; j++){
+                System.out.print(arr[i][j]+" ");
+            }
+            System.out.println();
+        }
+        System.out.println();*/
