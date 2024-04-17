@@ -1,38 +1,36 @@
 package 백준.fiveJuCha;
 
+import java.io.BufferedReader;
+import java.io.IOError;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.Buffer;
 import java.util.*;
+/*
+ * 시도 : 1회
+ * 시간 : 4시간 30분
+ * 성공 여부 : 성공
+ * */
 public class BackJun_2212 {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        //1. 입력을 받는다.
-        int n = sc.nextInt(); // 센서의 갯수
-        int k = sc.nextInt(); // 집중국의 갯수
-        //2. 만약 집중국 갯수(k) >= 센서 갯수(n)이면, 0을 출력하고 종료한다.
-        if(k >= n) {
-            System.out.println(0);
-            return;
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int sensor = Integer.parseInt(br.readLine());
+        int converter = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] arr = new int[sensor];
+        for(int i=0; i<sensor; i++) {
+            arr[i] = Integer.parseInt(st.nextToken());
         }
+        Arrays.sort(arr);
+        int[] diff = new int[sensor-1];
+        for(int i=0; i<sensor-1; i++) {
+            diff[i] = arr[i+1]-arr[i];
+        }
+        Arrays.sort(diff);
         int sum = 0;
-
-        //1. 입력을 받는다
-        int[] sensorArr = new int[n];
-        for(int i = 0; i < n; i++)
-            sensorArr[i] = sc.nextInt();
-
-        //3. 센서의 거리를 오름차순으로 정렬한다. (순서대로 배치)
-        Arrays.sort(sensorArr);
-
-        //4. 각 센서 거리의 차이를 담은 배열을 만든다.
-        Integer[] diffArr = new Integer[n-1];
-        for(int i = 0; i < n-1; i++)
-            diffArr[i] = sensorArr[i+1] - sensorArr[i];
-
-        //5. 차이 배열을 내림차순으로 정렬한다.
-        Arrays.sort(diffArr, Collections.reverseOrder());
-
-        //6. 차이 배열의 k-1 ~ 마지막 까지의 합을 출력한다.
-        for(int i = k-1; i < n-1; i++) {
-            sum += diffArr[i];
+        for(int i=0; i<diff.length-(converter-1); i++) {
+            sum += diff[i];
         }
         System.out.println(sum);
     }

@@ -5,7 +5,11 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
+/*
+ * 시도 : 5회
+ * 시간 : 3시간 40분
+ * 성공 여부 : 실패
+ * */
 public class BackJun_2437 {
     static int N;
     static int[] arr;

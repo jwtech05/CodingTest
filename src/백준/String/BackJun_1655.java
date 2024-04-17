@@ -8,41 +8,34 @@ import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 /*
- * 시도 : 1회
- * 시간 : 1시간 15분
+ * 시도 : 4회
+ * 시간 : 3시간 15분
  * 성공 여부 : 실패
  * 시간초과
  * */
 public class BackJun_1655 {
-    public static ArrayList<Integer> arr;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        arr = new ArrayList<>();
+        PriorityQueue<Integer> maxPQ = new PriorityQueue<>((o1,o2) -> o2-o1);
+        PriorityQueue<Integer> minPQ = new PriorityQueue<>();
         for(int i=0; i<N; i++) {
             int num = Integer.parseInt(br.readLine());
-            arr.add(binary(arr.size(), num), num);
-            int middle = arr.size() / 2;
-            if(arr.size() % 2 == 0 && middle > 0){
-                System.out.println(arr.get(middle-1));
+            if(maxPQ.size() == minPQ.size()){
+                maxPQ.add(num);
+                if(!minPQ.isEmpty() && maxPQ.peek() > minPQ.peek()){
+                    minPQ.add(maxPQ.poll());
+                    maxPQ.add(minPQ.poll());
+                }
             }else{
-                System.out.println(arr.get(middle));
+                minPQ.add(num);
+                if(maxPQ.peek() > minPQ.peek()){
+                    minPQ.add(maxPQ.poll());
+                    maxPQ.add(minPQ.poll());
+                }
             }
+            System.out.println(maxPQ.peek());
         }
-    }
-
-    public static int binary(int num, int compare){
-        int start = 0;
-        int end = num;
-        while(start < end) {
-            int mid = (start + end) / 2;
-            if (arr.get(mid) > compare) {
-                end = mid;
-            } else {
-                start = mid + 1;
-            }
-        }
-        return start;
     }
 }
 /*            for(int j=0; j<arr.size(); j++){
